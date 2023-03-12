@@ -2,6 +2,10 @@ const redux = require('redux')
 const createStore = redux.createStore
 const bindActionCreators = redux.bindActionCreators
 const combinedReducers = redux.combineReducers
+const applyMiddleware = redux.applyMiddleware
+
+const reduxLogger = require('redux-logger')
+const logger = reduxLogger.createLogger()
 
 const DRINK_ORDERED = 'DRINK_ORDERED'
 const DRINK_RESTOCKED = 'DRINK_RESTOCKED'
@@ -95,10 +99,10 @@ const rootReducer = combinedReducers({
     chaser: chasersReducer
 })
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(logger))
 console.log('initial state', store.getState())
 
-const unsubscribe = store.subscribe(() => console.log('Update state ', store.getState()))
+const unsubscribe = store.subscribe(() => {})
 
 // store.dispatch ( orderDrink())
 // store.dispatch ( orderDrink())
